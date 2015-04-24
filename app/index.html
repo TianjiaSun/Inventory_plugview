@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="store" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+  <title>Inventory Plugview</title>
+</head>
+<body data-ng-controller="StoreListCtrl" data-ng-init="init()" style="overflow: hidden;">
+<div class="whole_container">
+
+    <!-- These are all Product Cards -->
+    <div ng-repeat="product in products | orderBy:'id'">
+      <div class="product_unit_small_cards">
+        <div class="product_edge" 
+          ng-mouseover="product.selected=true;" 
+          ng-mouseleave="product.selected=false; product.edit=false; product.vendor=false; product.precise=false; product.add_link=false;" 
+          ng-init="product.selected=false; product.edit=false; product.vendor=false; product.precise=false; product.add_link=false;">
+          <div class="product_content_small_cards">
+            <img class="product_main_pic" src="{{product.pic}}"/>
+            <div class="inventory_count" 
+              ng-click="full_edit()"
+              ng-show="product.edit==false && product.vendor==false && product.precise==false && product.to_ship=='false'">
+              23
+            </div>
+            <div class="inventory_count_with_prediction" 
+              ng-show="product.edit==false && product.vendor==false && product.precise==false && product.to_ship=='true'">
+              <div class="inventory_count_with_prediction_now" ng-click="full_edit()">23</div>
+              <img class="decrease" src="img/decrease.png">
+              <div class="inventory_count_with_prediction_future">16</div>
+            </div>
+            <div class="product_hover_container fadeIn fadeIn-100ms">
+              <img class="app_icon_small"
+                src="img/history.png"
+                ng-mouseover="product.edit=true; product.vendor=false; product.precise=false; product.add_link=false;" 
+                ng-init="product.edit=false;" 
+                ng-click="full_edit()"/>
+              <img ng-class="{
+                'app_icon_large': LargeCards_flag===true, 
+                'app_icon_medium': MediumCards_flag===true, 
+                'app_icon_small': SmallCards_flag===true
+                }"
+                src="img/vendor.png"                
+                ng-mouseover="product.edit=false; product.vendor=true; product.precise=false; product.add_link=false;" 
+                ng-init="product.vendor=false;"
+                ng-click="full_vendor()"/>
+              <img ng-class="{
+                'app_icon_large': LargeCards_flag===true, 
+                'app_icon_medium': MediumCards_flag===true, 
+                'app_icon_small': SmallCards_flag===true
+                }"
+                src="img/precise.png"                
+                ng-mouseover="product.edit=false; product.vendor=false; product.precise=true; product.add_link=false;" 
+                ng-init="product.vendor=false;"
+                ng-click="full_precise()"/>
+              <img ng-class="{
+                'app_icon_large': LargeCards_flag===true, 
+                'app_icon_medium': MediumCards_flag===true, 
+                'app_icon_small': SmallCards_flag===true
+                }"
+                src="img/add_link.png"                
+                ng-init="product.add_link=false;"/>
+            </div>
+            <div class="product_name_container_small_cards">
+              {{product.name}}
+            </div>
+
+            <!-- These are icon plug-ins container -->
+            <div class="icon_showup_container">
+              <div class="edit_hover_content" ng-show="product.selected==true && product.edit==true">
+                <img class="icon_showup_container_expand" src="img/expand.png" ng-click="full_edit()">
+                <div class="hover_content_title_underline">Inventory</div>
+                <div class="one_record" ng-click="full_edit()">
+                  <div class="time_column">Now</div>
+                  <div class="count_column">27</div>
+                </div>
+                <div class="one_record" ng-click="full_edit()">
+                  <div class="time_column">04/14/2015</div>
+                  <div class="count_column">+19 = 27</div>
+                </div>
+                <div class="one_record" ng-click="full_edit()">
+                  <div class="time_column">04/14/2015</div>
+                  <div class="count_column">-2 = 8</div>
+                </div>
+                <div class="one_record" ng-click="full_edit()">
+                  <div class="time_column">04/14/2015</div>
+                  <div class="count_column">+10 = 10</div>
+                </div>
+                <div class="one_record" ng-click="full_edit()">
+                  <div class="time_column">Begin</div>
+                  <div class="count_column">0</div>
+                </div>
+              </div> 
+              <div class="vendor_hover_content" ng-show="product.selected==true && product.vendor==true">
+                <img class="icon_showup_container_expand" src="img/expand.png" ng-click="full_vendor()">
+                <div class="hover_content_title_underline">Vendor</div>
+              </div> 
+              <div class="precise_hover_content" ng-show="product.selected==true && product.precise==true">
+                <img class="icon_showup_container_expand" src="img/expand.png" ng-click="full_precise()">
+                <div class="hover_content_title_underline">Recommendation</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <!-- This is full screened product -->
+  <div id="full_screen_overlay" hidden>
+      <div class="full_screen_product">
+        <img class="close_full_screen" src="img/close_full_screen.png" ng-click="close_full_screen()"/>
+        <div class="product_edge">
+          <div class="product_content_large_cards">
+            <div class="full_screen_icon_container">
+              <img class="app_icon_large" src="img/history.png" ng-mouseover="switch_to_edit()"/>
+              <img class="app_icon_large" src="img/vendor.png" ng-mouseover="switch_to_vendor()"/>
+              <img class="app_icon_large" src="img/precise.png" ng-mouseover="switch_to_precise()"/>
+              <img class="app_icon_large" src="img/add_link.png"/>
+            </div>
+
+            <!-- These are icon plug-ins container -->
+            <div class="icon_showup_container">
+              <div class="edit_hover_content" ng-show="full_screen_edit==true">
+                <div class="hover_content_title">Inventory of</div>
+                <div class="hover_content_product_name">Kade Spade New York Cedar Street Handle Handbag</div>
+                <div class="adjust_container">
+                  <img class="adjust_minus" src="img/adjust_minus.png"/>
+                  <input class="adjust_number" value="1"></input>
+                  <img class="adjust_add" src="img/adjust_add.png"/>
+                </div>
+                <div class="one_record_large">
+                  <div class="time_column">Now</div>
+                  <div class="count_column">27</div>
+                </div>
+                <div class="one_record_large">
+                  <div class="time_column">04/14/2015</div>
+                  <div class="count_column">Thomas +19 = 27</div>
+                </div>
+                <div class="one_record_large">
+                  <div class="time_column">04/14/2015</div>
+                  <div class="count_column">Jason -2 = 8</div>
+                </div>
+                <div class="one_record_large">
+                  <div class="time_column">04/14/2015</div>
+                  <div class="count_column">Thomas +10 = 10</div>
+                </div>
+                <div class="one_record_large">
+                  <div class="time_column">Begin</div>
+                  <div class="count_column">0</div>
+                </div>
+              </div> 
+              <div class="vendor_hover_content" ng-show="full_screen_vendor==true">
+                <div class="hover_content_title_underline">Vendor</div>
+              </div> 
+              <div class="precise_hover_content" ng-show="full_screen_precise==true">
+                <div class="hover_content_title_underline">Recommended Vendors</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="review">Review this APPs Comibation</div>
+  </div>
+
+  <!-- This is barcode scanner -->
+  <div id="barcode_scanner" hidden>
+      <div class="full_screen_camera">
+        <img class="close_full_screen" src="img/close_full_screen.png" ng-click="close_full_screen()"/>
+        <div class="product_edge">
+          <div class="camera_not_available fadeIn fadeIn-Delay-100ms fadeIn-50ms">
+            Can not access to camera.
+          </div>
+          <webcam></webcam>
+          <img class="scan_img" src="img/scan_overlay_img.png"/>
+          <div class="recommand_mobile_app">
+            Scan on Mobile or Tablet
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <script src="jquery-1.11.2.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="js/webcam.min.js"></script>
+  <script src="js/controller.js"></script>
+  <script src="js/display.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</div>
+</body>
+</html>
