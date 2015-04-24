@@ -452,13 +452,13 @@ transition: 0.3s ease-in-out;
 }
 
 .product_content_small_cards {
-  position: absolute;
-  top: 0.6vw;
-  left: 0.6vw;
-  width: calc(100% - 1.2vw);
-  height: calc(100% - 1.2vw);
-  background: rgb(252, 252, 252);
-    overflow: hidden;
+position: absolute;
+top: 10px;
+left: 10px;
+width: calc(100% - 20px);
+height: calc(100% - 20px);
+background: rgb(252, 252, 252);
+overflow: hidden;
 }
 
 .product_main_pic {
@@ -498,13 +498,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc6db3f2', e
   z-index: 12;
 }
 
-.inventory_count:hover {
-  cursor: pointer;
-  background: rgb(0,0,0);
-  text-decoration: underline;
-  box-shadow: 0 0 10px black;
-}
-
 .inventory_count_with_prediction {
   position: absolute;
   top: calc(50% - 29px);
@@ -531,11 +524,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc6db3f2', e
   transform: scale(1) rotate(30deg);
 }
 
-.inventory_count_with_prediction:hover {
-  background: rgb(0,0,0);
-  box-shadow: 0 0 10px black;
-}
-
 
 .inventory_count_with_prediction_now {
   position: absolute;
@@ -552,11 +540,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc6db3f2', e
   -o-transform: scale(1) rotate(-30deg);
   -ms-transform: scale(1) rotate(-30deg);
   transform: scale(1) rotate(-30deg);
-}
-
-.inventory_count_with_prediction_now:hover {
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 .inventory_count_with_prediction_future {
@@ -715,24 +698,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f0f0f0', end
 }
 
 .app_icon_small {
-  position: relative;
-  top: 0px;
-  left: 0.2vw;
-  width: 2.8vw;
-  height: 2.8vw;
-  min-height: 32px;
-  min-width: 32px;
-  border-radius: 5px;
-  box-shadow: 0 0 6px 1px rgb(85, 85, 85);
-  background: rgb(230, 230, 230);
-  float: left;
-  margin: 0.15vw;
-  border-radius: 0.4vw;
-  opacity: 0.8;
-  -webkit-transition: 0.2s ease-in-out;
-  -moz-transition: 0.2s ease-in-out;
-  -o-transition: 0.2s ease-in-out;
-  transition: 0.2s ease-in-out;
+position: relative;
+top: 0px;
+left: 0.2vw;
+width: 2.8vw;
+height: 2.8vw;
+min-height: 36px;
+min-width: 36px;
+border-radius: 5px;
+box-shadow: 0 0 6px 1px rgb(85, 85, 85);
+background: rgb(230, 230, 230);
+float: left;
+margin: 2px;
+border-radius: 6px;
+opacity: 0.8;
+-webkit-transition: 0.2s ease-in-out;
+-moz-transition: 0.2s ease-in-out;
+-o-transition: 0.2s ease-in-out;
+transition: 0.2s ease-in-out;
 }
 .app_icon_small:hover {
   top: -0.4vw;
@@ -1283,18 +1266,18 @@ position: absolute;
 }
 
 .one_record {
-  position: relative;
-  top: 1.1vw;
-  left: 10%;
-  width: 80%;
-  height: 2.3vh;
-  text-align: left;
-  font-family: arial;
-  font-size: 115%;
-  color: white;
-  margin-bottom: 4px;
-  margin-top: 4px;
-  background: transparent;
+position: relative;
+top: 1.1vw;
+left: 10%;
+width: 80%;
+height: 16px;
+text-align: left;
+font-family: arial;
+font-size: 16px;
+color: white;
+margin-bottom: 4px;
+margin-top: 4px;
+background: transparent;
 }
 
 .one_record_large {
