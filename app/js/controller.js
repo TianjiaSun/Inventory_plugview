@@ -1,6 +1,6 @@
 'use strict';
 
-var store = angular.module('store',['ngRoute','webcam'])
+var store = angular.module('store',['ngRoute'])
   .controller('StoreListCtrl', function($scope, $http, $route, $routeParams, $sce, $timeout) {
 
     $scope.LargeCards_flag = false;
